@@ -5,6 +5,11 @@ on:
     branches: [ main ]  # or your default branch
   workflow_dispatch:  # Allows manual triggering
 
+# Serialize writes to gh-pages without interrupting an active deployment.
+concurrency:
+  group: pages-deploy
+  cancel-in-progress: false
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -15,7 +20,7 @@ jobs:
           egress-policy: audit
 
       - name: Checkout Repository
-        uses: actions/checkout@a37ce9120846195fa4ece8f58b268e6043cb2f26 # v3.7.0
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
 
       - name: Setup Bun
         uses: step-security/setup-bun@f6f5dadeac34f70c7828f731569e8d6e8330b8fb # v2.1.3
